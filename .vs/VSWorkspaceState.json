@@ -2,9 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\commands",
-    "\\commands\\tier_1",
-    "\\commands\\tier_4-passive"
+    "\\passives"
   ],
-  "SelectedNode": "\\index.js",
+  "SelectedNode": "\\botylan.js",
   "PreviewInSolutionExplorer": false
 }
