@@ -133,6 +133,12 @@ function fixIntervalAS() {
     clearInterval(activitySwitcher);
     activitySwitcher = setInterval(() => { switchActivity(true, false, 0, false); }, activitySwitchInterval);
 }
+function stopIntervalAS() {
+    clearInterval(activitySwitcher);
+}
+function startIntervalAS() {
+    activitySwitcher = setInterval(() => { switchActivity(true, false, 0, false); }, activitySwitchInterval);
+}
 function switchActivity(isRandom, isManual, activityNum, isNext)
 {
     if (isRandom === true)
@@ -312,9 +318,14 @@ client.on("message", message =>
                 for (let i = 0; i <= botychatPrefix.length; i++) {
                     if (m.indexOf(botychatPrefix[i]) != -1) {
                         runPassiveCommand("botychat");
-                        //checkifBotychat();
                     }
-                    else if (m.indexOf(botychatPrefix[i]) === -1 && i === botychatPrefix.length) { /*checkifBotychat();*/ }
+                    else if (m.indexOf(botychatPrefix[i]) === -1 && i === botychatPrefix.length) { saveRandMessage(); }
+                }
+            }
+            function saveRandMessage() {
+                let coinToss = Math.floor((Math.random() * 3) + 1);
+                if (coinToss === 2) {
+                    runPassiveCommand("savedmessage");
                 }
             }
             function runPassiveCommand(passiveCommand) {
@@ -349,7 +360,7 @@ client.on("message", message =>
                 else if (client.commands.get(command).perm === 2)
                 {
                     modCommandFired(command, message);
-                    client.commands.get(command).execute(message, client, args, cleanup, switchActivity, activityPresets, aPresetsRand);
+                    client.commands.get(command).execute(message, client, args, fs, convosFile, cleanup, filter, switchActivity, activityPresets, aPresetsRand);
                 }
                 else if (client.commands.get(command).perm === 3)
                 {
@@ -392,6 +403,55 @@ function checkDate()
 {
     d = new Date();
     return d.toUTCString();
+}
+//Filter as a function, so that commands can filter messages too.
+function filter(input) {
+    let m = input;
+    if (typeof input === "string") {
+        m = input.toLowerCase();
+    }
+
+    let filterIndex = [];
+
+    for (let i = 0; i <= profanity.length; ++i) {
+        if (i === profanity.length && m.indexOf(profanity[i]) != -1) {
+            filterIndex.push(profanity[i]);
+            returning();
+        }
+        else if (m.indexOf(profanity[i]) != -1) {
+            filterIndex.push(profanity[i]);
+        }
+        else if (i === profanity.length) {
+            returning();
+        }
+    }
+
+    function filterStageTwo() {
+        for (let i = 0; i <= syntax.length; ++i) {
+            if (i === syntax.length && m.indexOf(syntax[i]) != -1) {
+                filterIndex.push(syntax[i]);
+                returning();
+            }
+            else if (m.indexOf(syntax[i]) != -1) {
+                filterIndex.push(syntax[i]);
+            }
+            else if (i === syntax.length) {
+                returning();
+            }
+        }
+    }
+
+    function returning() {
+        if (typeof filterIndex === "object") {
+            console.log("filterIndex returned as array");
+            console.log("filterIndex: " + filterIndex);
+            return filterIndex;
+        }
+        else {
+            console.log("filterIndex returned as an empty array");
+            return [];
+        }
+    }
 }
 
 function adminCommandFired(commandId, message)

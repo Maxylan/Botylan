@@ -2,7 +2,7 @@ module.exports = {
     name: "activity",
     description: "Changes what the bot is \"watching\"",
     perm: 2,
-    execute(message, client, args, cleanup, switchActivity, activityPresets, aPresetsRand) {
+    execute(message, client, args, fs, convosFile, cleanup, filter, switchActivity, activityPresets, aPresetsRand) {
 
         if (args[0] > 0 && args[0] <= activityPresets.length) {
             parseInt(args[0]);
