@@ -2,7 +2,7 @@ module.exports = {
     name: "help",
     description: "Brings up a list of available commands.",
     perm: 1,
-    execute(message, args, t1Commands, t2Commands, t3Commands) {
+    execute(message, args, fs, t1Commands, t2Commands, t3Commands) {
         if (args[0] === "1") {
             let mBody = [];
             for (let i = 0; i < t1Commands.length; (i += 2)) {

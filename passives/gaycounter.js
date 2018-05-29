@@ -5,7 +5,7 @@ module.exports = {
         console.log("passiveGay triggered from message: \"" + message.content + "\"");
         pushGay(message);
         if (gayArray.length >= 4) {
-            let chance = Math.floor((Math.random() * 5) + 1);
+            let chance = Math.floor((Math.random() * 6) + 1);
             if (chance === 4) {
                 let target = gayArray[(Math.floor(Math.random() * gayArray.length))];
                 message.channel.send(target + " is super gya xd");
@@ -17,7 +17,5 @@ module.exports = {
                 console.log("gay counter triggered and the user " + target + " is gay HAHAHAHA xddd");
             }
         }
-        //message.channel.send("Hey");
-        
     },
 };

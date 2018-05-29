@@ -2,7 +2,7 @@ module.exports = {
     name: "roll",
     description: "Roll a random number!",
     perm: 1,
-    execute(message, args, t1Commands, t2Commands, t3Commands) {
+    execute(message, args, fs, t1Commands, t2Commands, t3Commands) {
         let rollRoof;
         let input;
         if (args[0] >= 2 || args[0] <= 9999) {
